@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
 
     <style>
@@ -86,7 +86,11 @@
         border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     
-    .logo-wrapper img { height: 80px; width: auto; filter: drop-shadow(0 0 10px rgba(255,255,255,0.1)); }
+    .logo-wrapper img { 
+        height: 70px; /* Logo Aumentada */
+        width: auto; 
+        filter: drop-shadow(0 0 10px rgba(255,255,255,0.1)); 
+    }
     
     .topbar-title { text-align: right; }
     .topbar-title span {
@@ -100,14 +104,14 @@
     }
     .topbar-title strong { font-weight: 500; color: var(--text-body); font-size: 0.9rem; }
 
-    /* --- Hero Section (Impacto Visual) --- */
+    /* --- Hero Section --- */
     .hero { 
         text-align: center; 
         padding: 40px 0 80px; 
         position: relative; 
     }
 
-    /* Título Principal: Apenas Verde e Azul */
+    /* Título Principal Animado (Verde <-> Azul) */
     .hero h1 {
         font-size: clamp(3rem, 5vw, 5rem);
         font-weight: 800;
@@ -123,21 +127,15 @@
             var(--secondary) 100%
         );
         
-        /* Aumenta o tamanho para permitir que as cores se movam */
         background-size: 200% auto; 
-        
-        /* Aplica a cor apenas ao texto */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        
-        /* Animação contínua e suave */
         animation: gradient-move 5s linear infinite;
         
         position: relative;
         display: inline-block;
     }
 
-    /* Garante que o 'span' (System) use o mesmo gradiente do título */
     .hero h1 span {
         background: none;
         color: inherit;
@@ -148,12 +146,10 @@
         font-size: 1.25rem;
         color: var(--text-body);
         max-width: 680px;
-        /* --- ALTERAÇÃO REALIZADA AQUI: Aumentado de 48px para 100px --- */
-        margin: 0 auto 40px; 
+        margin: 0 auto 100px; /* Espaçamento aumentado para o botão */
         font-weight: 300;
     }
 
-    /* Move o gradiente da esquerda para a direita */
     @keyframes gradient-move {
         0% { background-position: 0% center; }
         100% { background-position: 200% center; }
@@ -179,7 +175,6 @@
 
     .cta-button:hover { transform: scale(1.05); color: var(--primary); }
     
-    /* Efeito de brilho passando no botão */
     .cta-button::after {
         content: '';
         position: absolute;
@@ -190,7 +185,7 @@
     }
     .cta-button:hover::after { left: 100%; }
 
-    /* --- Info Bar (Glassmorphism Real) --- */
+    /* --- Info Bar (Glassmorphism) --- */
     .info-bar {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -240,24 +235,39 @@
 
     .results-section, .features-section, .installation-section { margin-bottom: 120px; }
 
-    /* --- Cards (O segredo do visual premium) --- */
-    .results-grid, .features-grid {
+    /* --- GRIDS DE LAYOUT (AJUSTADO PARA LADO A LADO) --- */
+    .results-grid {
         display: grid;
         gap: 24px;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* Força 3 colunas iguais para os resultados */
+        grid-template-columns: repeat(3, 1fr);
     }
 
+    .features-grid {
+        display: grid;
+        gap: 24px;
+        /* Força 4 colunas iguais para as funcionalidades */
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* --- Cards (Visual Premium) --- */
     .result-card, .feature-card {
         background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.4) 100%);
         border: 1px solid var(--glass-border);
         padding: 32px;
         border-radius: var(--radius);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efeito elástico */
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
         overflow: hidden;
+        
+        /* Altura igual para todos os cards na mesma linha */
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        /* CENTRALIZA O CONTEÚDO DO CARD */
+        text-align: center;
     }
 
-    /* Borda brilhante no topo do card (luz refletida) */
     .result-card::before, .feature-card::before {
         content: '';
         position: absolute;
@@ -273,17 +283,29 @@
         background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.6) 100%);
     }
 
-    /* Conteúdo dos Cards */
+    /* Conteúdo dos Cards de Resultado */
     .result-card .value {
         font-size: 3.5rem;
         font-weight: 800;
-        color: transparent;
-        background: linear-gradient(135deg, var(--secondary), var(--primary));
-        -webkit-background-clip: text;
         margin-bottom: 8px;
         line-height: 1;
+        
+        /* --- Efeito Animado do Título --- */
+        background: linear-gradient(
+            90deg, 
+            var(--secondary) 0%, 
+            var(--primary) 50%, 
+            var(--secondary) 100%
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradient-move 5s linear infinite;
+        
+        display: inline-block;
     }
 
+    /* Conteúdo dos Cards de Funcionalidade */
     .feature-card .icon {
         width: 56px; height: 56px;
         background: rgba(59, 130, 246, 0.1);
@@ -292,6 +314,9 @@
         margin-bottom: 24px;
         color: var(--primary);
         border: 1px solid rgba(59, 130, 246, 0.2);
+        /* Garante que o ícone fique centralizado no container */
+        margin-left: auto;
+        margin-right: auto;
     }
     .feature-card:hover .icon {
         background: var(--primary);
@@ -319,7 +344,6 @@
     }
     .step:last-child { padding-bottom: 0; }
 
-    /* Linha conectora */
     .step:not(:last-child)::before {
         content: '';
         position: absolute;
@@ -337,7 +361,7 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(30, 41, 59, 0.5); /* Borda "falsa" para separar da linha */
+        box-shadow: 0 0 0 4px rgba(30, 41, 59, 0.5);
         z-index: 2;
     }
     .step:hover .number {
@@ -373,14 +397,26 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* --- Mobile --- */
+    /* --- RESPONSIVO (Ajustes para Mobile/Tablet) --- */
+    @media (max-width: 1024px) {
+        /* Em tablets, quebra para 2 colunas */
+        .results-grid, .features-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
     @media (max-width: 768px) {
+        /* Em celulares, empilha tudo (1 coluna) */
         .hero h1 { font-size: 3rem; }
         .info-bar { grid-template-columns: 1fr; }
         .step { grid-template-columns: 50px 1fr; gap: 16px; }
         .step .number { width: 50px; height: 50px; font-size: 1.2rem; }
         .step:not(:last-child)::before { left: 24px; }
         .topbar { flex-direction: column; align-items: flex-start; gap: 20px; }
+        
+        .results-grid, .features-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 </head>
@@ -472,7 +508,7 @@
 
                 <div class="feature-card">
                     <div class="icon"><i data-feather="shield"></i></div>
-                    <h3>Acesso Controlado por Perfis Internos</h3>
+                    <h3>Acesso Controlado</h3>
                     <p>Uso exclusivo do setor de PCM, com perfis internos configurados diretamente no script para refletir responsabilidades do time.</p>
                 </div>
             </div>
